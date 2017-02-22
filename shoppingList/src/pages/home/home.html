@@ -1,3 +1,11 @@
+<!-- 
+Name: D'Arcey Taylor
+Student ID: 200302660
+Project: Midterm for COMP3025_W2017
+Date: 02/21/2017
+Front end for the Todo List - inlucdes slide functionality to send commands to the back end (home.ts)
+-->
+
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -30,7 +38,10 @@
 <!-- If item is completed, the item will appear greyed out with a line through it -->
       <ion-item text-wrap *ngIf="item.done === true">
         <ion-label>
-          <s> {{i+1}}. {{item.name}}  -  Amount = {{item.quantity}} </s>
+          <s>{{i+1}}. {{item.name}}</s>
+        </ion-label>
+        <ion-label>
+          <s>{{item.quantity}}</s>
         </ion-label>
         <ion-checkbox color="positive" checked="true" disabled="true"></ion-checkbox>
       </ion-item>

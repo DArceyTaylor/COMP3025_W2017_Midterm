@@ -94,52 +94,52 @@ export class HomePage {
       ]
     });
     prompt.present();
-  }
 
-  detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems) {
-    let prompt = this.alertCtrl.create({
-      title: 'ShoppingList: <br>' + ShoppingListName,
-      subTitle: 'Items: ' + ShoppingListItems,
-
-      buttons: [
-        {
-          text: 'Okay',
-          handler: data => {
-            console.log('Okay clicked');
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-
-  switchComplete(itemId, itemCompletion) {
-    if (itemCompletion == true) {
-      this.shoppinglist.update(itemId, {
-        done: false
-      });
-    }
-    if (itemCompletion == false) {
-      this.shoppinglist.update(itemId, {
-        done: true
-      });
-    }
-  }
-
-  addQuantity(itemId, itemQuantity) {
-    this.shoppinglist.update(itemId, {
-      quantity: itemQuantity + 1
-    })
-  }
-  subtractQuantity(itemId, itemQuantity) {
-    if (itemQuantity < 2){
-      this.shoppinglist.remove(itemId);
-    }
-    else{
-      this.shoppinglist.update(itemId, {
-      quantity: itemQuantity - 1
-    })
-    }
-    
-  }
 }
+    detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems) {
+      let prompt = this.alertCtrl.create({
+        title: 'ShoppingList: <br>' + ShoppingListName,
+        subTitle: 'Items: ' + ShoppingListItems,
+
+        buttons: [
+          {
+            text: 'Okay',
+            handler: data => {
+              console.log('Okay clicked');
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }
+
+    switchComplete(itemId, itemCompletion) {
+      if (itemCompletion == true) {
+        this.shoppinglist.update(itemId, {
+          done: false
+        });
+      }
+      if (itemCompletion == false) {
+        this.shoppinglist.update(itemId, {
+          done: true
+        });
+      }
+    }
+
+    addQuantity(itemId, itemQuantity) {
+      this.shoppinglist.update(itemId, {
+        quantity: itemQuantity + 1
+      })
+    }
+    subtractQuantity(itemId, itemQuantity) {
+      if (itemQuantity <= 1) {
+        this.shoppinglist.remove(itemId);
+      }
+      else {
+        this.shoppinglist.update(itemId, {
+          quantity: itemQuantity - 1
+        })
+      }
+
+    }
+  }
