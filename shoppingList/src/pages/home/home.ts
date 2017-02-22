@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { NavController,
+import {
+  NavController,
   AlertController,
-  ActionSheetController 
+  ActionSheetController
 } from 'ionic-angular';
 
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
@@ -12,13 +13,13 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
   templateUrl: 'home.html'
 })
 export class HomePage {
-shoppinglist: FirebaseListObservable<any>;
-Items: FirebaseListObservable<any>;
+  shoppinglist: FirebaseListObservable<any>;
+  Items: FirebaseListObservable<any>;
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
     af: AngularFire, public actionSheetCtrl: ActionSheetController) {
     this.shoppinglist = af.database.list('/shoppinglist');
   }
-addItem() {
+  addItem() {
     let prompt = this.alertCtrl.create({
       title: 'Add New Item',
       message: "Enter the Item's Info",
@@ -54,11 +55,11 @@ addItem() {
     prompt.present();
   }
 
-removeItem(itemId: string) {
+  removeItem(itemId: string) {
     this.shoppinglist.remove(itemId);
-  }  
+  }
 
-updateItem(itemId, itemName, itemQuantity) {
+  updateItem(itemId, itemName, itemQuantity) {
     let prompt = this.alertCtrl.create({
       title: 'List Items Information',
       message: "Update the information for this list",
@@ -67,13 +68,13 @@ updateItem(itemId, itemName, itemQuantity) {
           name: 'name',
           placeholder: 'Item name',
           value: itemName
-        }, 
+        },
         {
           name: 'quantity',
           placeholder: 'Item amount',
           value: itemQuantity
         },
-        ],
+      ],
       buttons: [
         {
           text: 'Cancel',
@@ -95,8 +96,8 @@ updateItem(itemId, itemName, itemQuantity) {
     prompt.present();
   }
 
-detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems){
-let prompt = this.alertCtrl.create({
+  detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems) {
+    let prompt = this.alertCtrl.create({
       title: 'ShoppingList: <br>' + ShoppingListName,
       subTitle: 'Items: ' + ShoppingListItems,
 
@@ -112,17 +113,33 @@ let prompt = this.alertCtrl.create({
     prompt.present();
   }
 
-  switchComplete(itemId, itemCompletion){
-    if(itemCompletion == true){
+  switchComplete(itemId, itemCompletion) {
+    if (itemCompletion == true) {
       this.shoppinglist.update(itemId, {
         done: false
       });
     }
-    if(itemCompletion == false){
+    if (itemCompletion == false) {
       this.shoppinglist.update(itemId, {
         done: true
       });
     }
   }
 
+  addQuantity(itemId, itemQuantity) {
+    this.shoppinglist.update(itemId, {
+      quantity: itemQuantity + 1
+    })
+  }
+  subtractQuantity(itemId, itemQuantity) {
+    if (itemQuantity < 2){
+      this.shoppinglist.remove(itemId);
+    }
+    else{
+      this.shoppinglist.update(itemId, {
+      quantity: itemQuantity - 1
+    })
+    }
+    
+  }
 }
