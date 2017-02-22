@@ -1,3 +1,10 @@
+/*
+Name: D'Arcey Taylor
+Student ID: 200302660
+Project: Midterm for COMP3025_W2017
+Date: 02/22/2017
+this is the back end for the home.html
+*/
 import { Component } from '@angular/core';
 
 import {
@@ -19,6 +26,9 @@ export class HomePage {
     af: AngularFire, public actionSheetCtrl: ActionSheetController) {
     this.shoppinglist = af.database.list('/shoppinglist');
   }
+  /*
+    Adds a new item to the database
+  */
   addItem() {
     let prompt = this.alertCtrl.create({
       title: 'Add New Item',
@@ -54,11 +64,15 @@ export class HomePage {
     });
     prompt.present();
   }
-
+  /*
+    Removes an item to the database
+  */
   removeItem(itemId: string) {
     this.shoppinglist.remove(itemId);
   }
-
+  /*
+    Updates the database with any changes made
+  */
   updateItem(itemId, itemName, itemQuantity) {
     let prompt = this.alertCtrl.create({
       title: 'List Items Information',
@@ -95,51 +109,58 @@ export class HomePage {
     });
     prompt.present();
 
-}
-    detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems) {
-      let prompt = this.alertCtrl.create({
-        title: 'ShoppingList: <br>' + ShoppingListName,
-        subTitle: 'Items: ' + ShoppingListItems,
+  }
+  detailedShoppingList(ShoppingListId, ShoppingListName, ShoppingListItems) {
+    let prompt = this.alertCtrl.create({
+      title: 'ShoppingList: <br>' + ShoppingListName,
+      subTitle: 'Items: ' + ShoppingListItems,
 
-        buttons: [
-          {
-            text: 'Okay',
-            handler: data => {
-              console.log('Okay clicked');
-            }
+      buttons: [
+        {
+          text: 'Okay',
+          handler: data => {
+            console.log('Okay clicked');
           }
-        ]
-      });
-      prompt.present();
-    }
-
-    switchComplete(itemId, itemCompletion) {
-      if (itemCompletion == true) {
-        this.shoppinglist.update(itemId, {
-          done: false
-        });
-      }
-      if (itemCompletion == false) {
-        this.shoppinglist.update(itemId, {
-          done: true
-        });
-      }
-    }
-
-    addQuantity(itemId, itemQuantity) {
+        }
+      ]
+    });
+    prompt.present();
+  }
+  /*
+    Switches the done field in the database to change the display accordingly
+  */
+  switchComplete(itemId, itemCompletion) {
+    if (itemCompletion == true) {
       this.shoppinglist.update(itemId, {
-        quantity: itemQuantity + 1
-      })
+        done: false
+      });
     }
-    subtractQuantity(itemId, itemQuantity) {
-      if (itemQuantity <= 1) {
-        this.shoppinglist.remove(itemId);
-      }
-      else {
-        this.shoppinglist.update(itemId, {
-          quantity: itemQuantity - 1
-        })
-      }
-
+    if (itemCompletion == false) {
+      this.shoppinglist.update(itemId, {
+        done: true
+      });
     }
   }
+  /*
+    Adds 1 to an item quantity in the database
+  */
+  addQuantity(itemId, itemQuantity) {
+    this.shoppinglist.update(itemId, {
+      quantity: itemQuantity + 1
+    })
+  }
+  /*
+    Subtracts 1 to an item quantity in the database
+  */
+  subtractQuantity(itemId, itemQuantity) {
+    if (itemQuantity <= 1) {
+      this.shoppinglist.remove(itemId);
+    }
+    else {
+      this.shoppinglist.update(itemId, {
+        quantity: itemQuantity - 1
+      })
+    }
+
+  }
+}

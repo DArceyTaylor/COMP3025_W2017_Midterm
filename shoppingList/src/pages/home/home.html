@@ -2,8 +2,8 @@
 Name: D'Arcey Taylor
 Student ID: 200302660
 Project: Midterm for COMP3025_W2017
-Date: 02/21/2017
-Front end for the Todo List - inlucdes slide functionality to send commands to the back end (home.ts)
+Date: 02/22/2017
+Front end for the Shopping List - inlucdes slide functionality to send commands to the back end (home.ts)
 -->
 
 <ion-header>
@@ -58,7 +58,7 @@ Front end for the Todo List - inlucdes slide functionality to send commands to t
       </ion-item>
 
 <!-- Options for item slide -->
-      
+      <!-- Slide Right -->
       <ion-item-options side="right">
         <!-- Edit Details -->
         <button ion-button large color="primary" (click)="updateItem(item.$key, item.name, item.quantity)">
@@ -69,7 +69,7 @@ Front end for the Todo List - inlucdes slide functionality to send commands to t
           <ion-icon name="trash"><br>Delete</ion-icon>
         </button>
       </ion-item-options>
-
+      <!-- Slide Left -->
       <ion-item-options side="left">
         <!-- Add or Subtract Quantites -->
         <button ion-button large color="danger" (click)="subtractQuantity(item.$key, item.quantity)">
