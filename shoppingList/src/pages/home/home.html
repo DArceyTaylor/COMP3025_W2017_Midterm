@@ -1,17 +1,60 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>
+      <ion-icon name="cart" item-left ></ion-icon>
+       Shopping List
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addItem()">
+      <ion-icon name="add-circle"></ion-icon>
+      Add New Item
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
+
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-list inset *ngFor="let item of shoppinglist | async; let i = index;">
+  <ion-item-sliding (click)="switchComplete(item.$key, item.done)"> 
+
+<!-- If item is completed, the item will appear greyed out with a line through it -->
+      <ion-item text-wrap *ngIf="item.done === true">
+        <ion-label>
+          <s> {{i+1}}. {{item.name}} - {{item.quantity}} </s>
+        </ion-label>
+        <ion-checkbox color="positive" checked="true" disabled="true"></ion-checkbox>
+      </ion-item>
+
+<!-- If item isn't completed, the item will appear normally -->
+      <ion-item text-wrap *ngIf="item.done === false">
+        <ion-label>
+          {{i+1}}. {{item.name}} - {{item.quantity}}
+        </ion-label>
+        <ion-checkbox color="positive" checked="false" (click)="switchComplete(item.$key, item.done)"></ion-checkbox>
+      </ion-item>
+
+<!-- Options for item slide -->
+      
+      <ion-item-options side="right">
+        <!-- Edit Details -->
+        <button ion-button large color="primary" (click)="updateItem(item.$key, item.name, item.quantity)">
+          <ion-icon name="md-settings"><br>Edit</ion-icon>
+        </button>
+        <!-- Delete Achievement -->
+        <button ion-button large color="danger" (click)="removeItem(item.$key)">
+          <ion-icon name="trash"><br>Delete</ion-icon>
+        </button>
+      </ion-item-options>
+<!--
+      <ion-item-options side="left">
+        <!-- View Details 
+        <button ion-button large color="secondary" (click)="detailedAchievement(achievement.$key, achievement.title, achievement.game, achievement.description, achievement.points, achievement.difficulty)">
+          <ion-icon name="information-circle"><br>Details</ion-icon>
+        </button>
+      </ion-item-options>
+ -->
+    </ion-item-sliding>
+  </ion-list>
+
 </ion-content>

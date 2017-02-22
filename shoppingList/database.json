@@ -1,0 +1,11 @@
+{
+  "shoppinglist" : [ {
+    "name" : "Apples",
+    "quantity" : 2,
+    "done": false
+  }, {
+    "name" : "Oranges",
+    "quantity" : 2,
+    "done": false
+  } ]
+}
